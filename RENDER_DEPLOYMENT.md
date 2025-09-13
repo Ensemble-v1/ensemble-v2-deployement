@@ -37,12 +37,21 @@ git push origin main
 
 ### 2. Create Services on Render
 
+#### Choose Unique Service Names
+**Important**: Choose unique names that aren't already taken on Render. The names in the config are placeholders - replace them with your own unique names.
+
+**Examples of good names:**
+- `my-ensemble-frontend`
+- `sheet-music-converter-backend`
+- `yourname-ensemble-api`
+- `music-processing-app`
+
 #### Frontend Service (Free Tier)
 1. Go to [render.com](https://render.com) and sign in
 2. Click "New" → "Web Service"
 3. Connect your repository: `Ensemble-v1/ensemble-v2-deployement`
 4. Configure:
-   - **Name**: `ensemble-frontend`
+   - **Name**: Choose a unique name (e.g., `yourname-ensemble-frontend`)
    - **Runtime**: `Node`
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start`
@@ -52,7 +61,7 @@ git push origin main
 1. Click "New" → "Web Service"
 2. Connect the same repository
 3. Configure:
-   - **Name**: `ensemble-backend`
+   - **Name**: Choose a unique name (e.g., `yourname-ensemble-backend`)
    - **Runtime**: `Node`
    - **Build Command**: `cd backend && npm install`
    - **Start Command**: `cd backend && npm start`
@@ -61,7 +70,7 @@ git push origin main
 #### Database (Free Tier)
 1. Click "New" → "PostgreSQL"
 2. Configure:
-   - **Name**: `ensemble-db`
+   - **Name**: Choose a unique name (e.g., `yourname-ensemble-db`)
    - **Plan**: `Free`
 
 ### 3. Environment Variables
@@ -70,20 +79,22 @@ git push origin main
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_your_key
 CLERK_SECRET_KEY=sk_live_your_key
-NEXT_PUBLIC_BACKEND_URL=https://ensemble-backend.onrender.com
+NEXT_PUBLIC_BACKEND_URL=https://your-app-backend.onrender.com
 ```
 
 #### Backend Environment Variables:
 ```
 NODE_ENV=production
 PORT=10000
-FRONTEND_URL=https://ensemble-frontend.onrender.com
+FRONTEND_URL=https://your-app-frontend.onrender.com
 CLERK_SECRET_KEY=sk_live_your_key
 CLERK_PUBLISHABLE_KEY=pk_live_your_key
 PYTHON_PATH=python3
 LOG_LEVEL=info
 DATABASE_URL=postgresql://user:password@host:5432/db
 ```
+
+**Important**: Replace the URLs above with your actual Render service URLs after deployment.
 
 ## Free Tier Limitations & Solutions
 

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ensemble-backend
+    name: your-app-backend
     runtime: node
     plan: starter  # $7/month - 512MB RAM, 0.5 CPU
     buildCommand: cd backend && npm install
@@ -11,7 +11,7 @@ services:
       - key: PORT
         value: 10000
       - key: FRONTEND_URL
-        value: https://ensemble-v2.onrender.com
+        value: https://your-app-frontend.onrender.com
       - key: CLERK_SECRET_KEY
         sync: false
       - key: CLERK_PUBLISHABLE_KEY
@@ -22,7 +22,7 @@ services:
         value: info
 
   - type: web
-    name: ensemble-frontend
+    name: your-app-frontend
     runtime: node
     plan: free  # $0/month - 750 hours/month
     buildCommand: npm install && npm run build
@@ -33,9 +33,9 @@ services:
       - key: CLERK_SECRET_KEY
         sync: false
       - key: NEXT_PUBLIC_BACKEND_URL
-        value: https://ensemble-backend.onrender.com
+        value: https://your-app-backend.onrender.com
 
 databases:
-  - name: ensemble-db
-    databaseName: ensemble
-    user: ensemble
+  - name: your-app-db
+    databaseName: your_app
+    user: your_app_user
