@@ -1,0 +1,69 @@
+name: ensemble-app
+services:
+  - name: frontend
+    source_dir: /
+    github:
+      repo: your-username/ensemble-v2-deployement
+      branch: main
+      deploy_on_push: true
+    run_command: npm start
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    health_check:
+      http_path: /api/health
+    routes:
+      - path: /
+    cors:
+      allow_origins:
+        - regex: .*
+      allow_methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      allow_headers:
+        - '*'
+      max_age: 86400
+
+  - name: backend
+    source_dir: backend
+    github:
+      repo: your-username/ensemble-v2-deployement
+      branch: main
+      deploy_on_push: true
+    run_command: npm start
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    health_check:
+      http_path: /health
+    routes:
+      - path: /api
+    cors:
+      allow_origins:
+        - regex: .*
+      allow_methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      allow_headers:
+        - '*'
+      max_age: 86400
+    autoscaling:
+      min_instances: 1
+      max_instances: 5
+      metrics:
+        cpu:
+          percent: 80
+
+databases:
+  - name: ensemble-cache
+    engine: REDIS
+    size: basic
+    num_nodes: 1

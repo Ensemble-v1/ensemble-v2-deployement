@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8080
+    depends_on:
+      - backend
+    networks:
+      - ensemble-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - FRONTEND_URL=http://localhost:3000
+      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+      - CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY}
+      - PYTHON_PATH=python3
+      - LOG_LEVEL=info
+    volumes:
+      - ./backend/logs:/app/logs
+      - ./backend/downloads:/app/downloads
+      - ./backend/temp:/app/temp
+    networks:
+      - ensemble-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  ensemble-network:
+    driver: bridge
+
+volumes:
+  backend-logs:
+  backend-downloads:
+  backend-temp:
