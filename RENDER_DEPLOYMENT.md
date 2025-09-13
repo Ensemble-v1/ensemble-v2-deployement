@@ -6,7 +6,6 @@ This guide covers deploying the Ensemble sheet music conversion application to R
 ## Cost Breakdown
 - **Frontend**: FREE ($0/month) - 750 hours/month
 - **Backend**: Starter ($7/month) - 512MB RAM, 0.5 CPU
-- **Database**: FREE ($0/month) - 256MB, 1GB storage
 - **Total**: $7/month
 
 ## Prerequisites
@@ -41,7 +40,6 @@ git push origin main
 **Your services will be named:**
 - **Frontend**: `ensemble-v1-frontend`
 - **Backend**: `ensemble-v1-backend`
-- **Database**: `ensemble-v1-db`
 
 **Note**: If these names are taken, you can modify them in `render.yaml` before deployment.
 
@@ -66,12 +64,6 @@ git push origin main
    - **Start Command**: `cd backend && npm start`
    - **Plan**: `Starter` ($7/month)
 
-#### Database (Free Tier)
-1. Click "New" → "PostgreSQL"
-2. Configure:
-   - **Name**: `ensemble-v1-db`
-   - **Plan**: `Free`
-
 ### 3. Environment Variables
 
 #### Frontend Environment Variables:
@@ -90,7 +82,6 @@ CLERK_SECRET_KEY=sk_live_your_key
 CLERK_PUBLISHABLE_KEY=pk_live_your_key
 PYTHON_PATH=python3
 LOG_LEVEL=info
-DATABASE_URL=postgresql://user:password@host:5432/db
 ```
 
 ## Free Tier Limitations & Solutions
@@ -124,7 +115,6 @@ npm run wake:render https://ensemble-v1-backend.onrender.com
 ### Cost Monitoring
 - Free tier: 750 hours/month
 - Starter tier: $7/month (fixed)
-- Database: Free (256MB limit)
 
 ## Troubleshooting
 
@@ -171,7 +161,6 @@ npm run wake:render https://ensemble-v1-backend.onrender.com
 
 - [ ] Frontend deployed on free tier
 - [ ] Backend deployed on starter tier ($7/month)
-- [ ] Database created on free tier
 - [ ] Environment variables configured
 - [ ] Services accessible at Render URLs
 - [ ] OEMER processing working

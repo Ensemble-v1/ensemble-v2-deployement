@@ -34,8 +34,3 @@ services:
         sync: false
       - key: NEXT_PUBLIC_BACKEND_URL
         value: https://ensemble-v1-backend.onrender.com
-
-databases:
-  - name: ensemble-v1-db
-    databaseName: ensemble_v1
-    user: ensemble_v1_user
