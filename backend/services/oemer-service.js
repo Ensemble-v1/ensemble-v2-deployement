@@ -23,17 +23,20 @@ class OemerService {
   async initialize() {
     try {
       logger.info('🎵 Initializing OEMER service...');
-      
+
       // Check OEMER installation
       await this.checkInstallation();
-      
+
       // Verify model files
       await this.verifyModels();
-      
+
       logger.info('✅ OEMER service initialized successfully');
+      this.available = true;
     } catch (error) {
       logger.error('❌ OEMER service initialization failed:', error.message);
-      logger.warn('⚠️  Sheet music processing will be unavailable until OEMER is properly configured');
+      logger.warn('⚠️  OEMER not available - sheet music processing will return mock results');
+      logger.warn('💡 To enable full functionality, OEMER must be installed on the server');
+      this.available = false;
     }
   }
 
@@ -136,37 +139,44 @@ except Exception as e:
     logger.info(`🎼 Starting OEMER processing: ${path.basename(imagePath)}`);
 
     try {
+      // Check if OEMER is available
+      if (!this.available) {
+        const errorMsg = 'OEMER service is not available. This deployment environment does not support OEMER installation. Please use a local development environment or a server with OEMER installed.';
+        logger.error(`❌ ${errorMsg}`);
+        throw new Error(errorMsg);
+      }
+
       // Ensure paths exist and are absolute
       const absoluteImagePath = path.resolve(imagePath);
       const absoluteOutputDir = path.resolve(outputDir);
-      
+
       // Verify input file exists
       if (!await fs.pathExists(absoluteImagePath)) {
         throw new Error(`Input image not found: ${absoluteImagePath}`);
       }
-      
+
       // Create output directory
       await fs.ensureDir(absoluteOutputDir);
-      
+
       // Log processing start
       logger.info(`   📁 Input: ${absoluteImagePath}`);
       logger.info(`   📁 Output: ${absoluteOutputDir}`);
-      
+
       // Preprocess image for better recognition
       const preprocessedPath = await this.preprocessImage(absoluteImagePath, absoluteOutputDir);
-      
+
       // Execute OEMER directly
       const oemerResult = await this.runOemer(preprocessedPath, absoluteOutputDir);
-      
+
       // Process the results
       const result = await this.processOemerOutput(oemerResult, absoluteOutputDir, startTime);
-      
+
       logger.info(`✅ OEMER processing completed in ${Date.now() - startTime}ms`);
       logger.info(`   📄 Generated: ${path.basename(result.musicXmlPath)}`);
       logger.info(`   🎯 Confidence: ${(result.confidence * 100).toFixed(1)}%`);
-      
+
       return result;
-      
+
     } catch (error) {
       const processingTime = Date.now() - startTime;
       logger.error(`❌ OEMER processing failed after ${processingTime}ms:`, error.message);
@@ -585,6 +595,8 @@ except Exception as e:
       return 'Unknown version';
     }
   }
+
+
 
   /**
    * Get service status information
