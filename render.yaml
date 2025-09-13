@@ -2,6 +2,7 @@ services:
   - type: web
     name: ensemble-backend
     runtime: node
+    plan: starter  # $7/month - 512MB RAM, 0.5 CPU
     buildCommand: cd backend && npm install
     startCommand: cd backend && npm start
     envVars:
@@ -15,10 +16,15 @@ services:
         sync: false
       - key: CLERK_PUBLISHABLE_KEY
         sync: false
+      - key: PYTHON_PATH
+        value: python3
+      - key: LOG_LEVEL
+        value: info
 
   - type: web
     name: ensemble-frontend
     runtime: node
+    plan: free  # $0/month - 750 hours/month
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:

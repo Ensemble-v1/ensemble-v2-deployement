@@ -7,11 +7,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "docker:build": "docker build -t ensemble-frontend .",
-    "docker:run": "docker run -p 3000:3000 ensemble-frontend",
-    "docker:dev": "docker-compose up --build",
-    "docker:stop": "docker-compose down",
-    "deploy:do": "./scripts/deploy-do.sh",
+    "deploy:render": "./scripts/deploy-render.sh",
+    "wake:render": "./scripts/wake-render-service.sh",
     "postinstall": "cd backend && npm install"
   },
   "dependencies": {
