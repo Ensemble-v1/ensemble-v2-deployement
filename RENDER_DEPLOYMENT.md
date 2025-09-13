@@ -37,21 +37,20 @@ git push origin main
 
 ### 2. Create Services on Render
 
-#### Choose Unique Service Names
-**Important**: Choose unique names that aren't already taken on Render. The names in the config are placeholders - replace them with your own unique names.
+#### Service Names (Pre-configured)
+**Your services will be named:**
+- **Frontend**: `ensemble-v1-frontend`
+- **Backend**: `ensemble-v1-backend`
+- **Database**: `ensemble-v1-db`
 
-**Examples of good names:**
-- `my-ensemble-frontend`
-- `sheet-music-converter-backend`
-- `yourname-ensemble-api`
-- `music-processing-app`
+**Note**: If these names are taken, you can modify them in `render.yaml` before deployment.
 
 #### Frontend Service (Free Tier)
 1. Go to [render.com](https://render.com) and sign in
 2. Click "New" → "Web Service"
 3. Connect your repository: `Ensemble-v1/ensemble-v2-deployement`
 4. Configure:
-   - **Name**: Choose a unique name (e.g., `yourname-ensemble-frontend`)
+   - **Name**: `ensemble-v1-frontend`
    - **Runtime**: `Node`
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npm start`
@@ -61,7 +60,7 @@ git push origin main
 1. Click "New" → "Web Service"
 2. Connect the same repository
 3. Configure:
-   - **Name**: Choose a unique name (e.g., `yourname-ensemble-backend`)
+   - **Name**: `ensemble-v1-backend`
    - **Runtime**: `Node`
    - **Build Command**: `cd backend && npm install`
    - **Start Command**: `cd backend && npm start`
@@ -70,7 +69,7 @@ git push origin main
 #### Database (Free Tier)
 1. Click "New" → "PostgreSQL"
 2. Configure:
-   - **Name**: Choose a unique name (e.g., `yourname-ensemble-db`)
+   - **Name**: `ensemble-v1-db`
    - **Plan**: `Free`
 
 ### 3. Environment Variables
@@ -79,14 +78,14 @@ git push origin main
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_your_key
 CLERK_SECRET_KEY=sk_live_your_key
-NEXT_PUBLIC_BACKEND_URL=https://your-app-backend.onrender.com
+NEXT_PUBLIC_BACKEND_URL=https://ensemble-v1-backend.onrender.com
 ```
 
 #### Backend Environment Variables:
 ```
 NODE_ENV=production
 PORT=10000
-FRONTEND_URL=https://your-app-frontend.onrender.com
+FRONTEND_URL=https://ensemble-v1-frontend.onrender.com
 CLERK_SECRET_KEY=sk_live_your_key
 CLERK_PUBLISHABLE_KEY=pk_live_your_key
 PYTHON_PATH=python3
@@ -94,15 +93,13 @@ LOG_LEVEL=info
 DATABASE_URL=postgresql://user:password@host:5432/db
 ```
 
-**Important**: Replace the URLs above with your actual Render service URLs after deployment.
-
 ## Free Tier Limitations & Solutions
 
 ### Problem: Services Sleep After 15 Minutes
 **Solution**: Use wake-up script when needed
 ```bash
 # Wake up the backend service
-npm run wake:render https://ensemble-backend.onrender.com
+npm run wake:render https://ensemble-v1-backend.onrender.com
 ```
 
 ### Problem: Limited Resources
@@ -184,5 +181,5 @@ npm run wake:render https://ensemble-backend.onrender.com
 **Total Cost: $7/month** 🎉
 
 **URLs will be:**
-- Frontend: `https://ensemble-frontend.onrender.com`
-- Backend: `https://ensemble-backend.onrender.com`
+- Frontend: `https://ensemble-v1-frontend.onrender.com`
+- Backend: `https://ensemble-v1-backend.onrender.com`
